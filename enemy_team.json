@@ -1,0 +1,31 @@
+[
+    {
+        "name": "Pikachu",
+        "hp": 100,
+        "moves": [
+            {
+                "name": "Thunderbolt",
+                "damage": 20
+            },
+            {
+                "name": "Quick Attack",
+                "damage": 10
+            }
+        ]
+    },
+
+    {
+        "name": "Charmander",
+        "hp": 90,
+        "moves": [
+            {
+                "name": "Ember",
+                "damage": 15
+            },
+            {
+                "name": "Scratch",
+                "damage": 8
+            }
+        ]
+    }
+]
