@@ -1,3 +1,2 @@
-Balbasaur
-Charizard
-Squirtle
+Pikachu
+Charmander
