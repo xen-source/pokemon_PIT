@@ -17,6 +17,7 @@ def menu():
         if user_choice == 1:
             battle()
         elif user_choice == 2:
+            os.system("cls" if os.name == "nt" else "clear")
             view_pokemons()
         else:
             print("Exiting...\n")
@@ -72,6 +73,8 @@ def battle():
                 enemy_bar = "■"
             else:
                 enemy_bar = ""
+            
+            print("                    ---[POKEMON BATTLE]---\n") 
 
             print(f"\n                                 {enemy_pkmn['name']}[{enemy_bar}]\n")
             print(f"{my_pkmn['name']}[{my_bar}]")
@@ -120,7 +123,7 @@ def battle():
                 if enemy_pkmn["hp"] < 30:
                     heal = random.randint(7,12)
                     attack = 0
-                    my_pkmn["hp"] += heal
+                    enemy_pkmn["hp"] += heal
                     print(f"\n{attacker['name']} took {heal} heal!")
                     time.sleep(0.6)
                 elif num == 1:
@@ -140,18 +143,18 @@ def battle():
             print(f"\n{enemy_pkmn['name']} won!")
             back = int(input("Back to menu[y/n]: "))
             if back.lower() == 'y':
-                menu()
                 os.system("cls" if os.name == "nt" else "clear")
+                menu()
             else:
                 return
         else:
             print(f"\n{my_pkmn['name']} won!")
             back = input("Back to menu[y/n]: ")
             if back.lower() == 'y':
-                menu()
                 os.system("cls" if os.name == "nt" else "clear")
+                menu()
             else:
-                return
+                return 0
 
     except FileNotFoundError as e:
         print(f"FILE ERROR: I couldn't find the file: {e.filename}")
@@ -161,20 +164,43 @@ def battle():
 # SEARCH FUNCTION
 
 def search(pokemons):
-    user_input = input("Enter pokemon name: ").strip().lower()
 
-    with open("pokemon_team.json", "r") as f:
-        pokedex = json.load(f)
+    while True:
+        print("---[POKEMON SEARCH]---\n")
+        try:
+            user_input = input("Enter pokemon name: ").strip().lower()
+        except ValueError:
+            print("Error! Try again.")
+            time.sleep(0.6)
 
-    for pokemon in pokedex:
-        if pokemon["name"].lower() == user_input:
-            print(f"Name: {pokemon['name']}")
-            print(f"Hp: {pokemon['hp']}")
-            print("Moves:")
-            print(f"    Move 1: {pokemon['moves'][0]['name']}")
-            print(f"    Damage: {pokemon['moves'][0]['damage']}")
-            print(f"    Move 2: {pokemon['moves'][1]['name']}")
-            print(f"    Damage: {pokemon['moves'][1]['damage']}")
+        with open("pokemon_team.json", "r") as f:
+            pokedex = json.load(f)
+
+        for pokemon in pokedex:
+            if pokemon["name"].lower() == user_input:
+                print(f"\nName: {pokemon['name']}")
+                print(f"Hp: {pokemon['hp']}")
+                print("Moves:")
+                print(f"    Move 1: {pokemon['moves'][0]['name']}")
+                print(f"    Damage: {pokemon['moves'][0]['damage']}")
+                print(f"    Move 2: {pokemon['moves'][1]['name']}")
+                print(f"    Damage: {pokemon['moves'][1]['damage']}")
+                
+                back = input("Back to view pokemons[y/n]: ")
+                if back.lower() == 'y':
+                    os.system("cls" if os.name == "nt" else "clear")
+                    view_pokemons()
+                else:
+                    return 0
+            elif pokemon["name"].lower() != user_input:
+                print("Pokemon is not in your pokedex!")
+                back = input("Back to view pokemons[y/n]: ")
+                if back.lower() == 'y':
+                    os.system("cls" if os.name == "nt" else "clear")
+                    view_pokemons()
+                else:
+                    return 0
+
 # VIEWING POKEMON DECK
 
 def view_pokemons():
@@ -189,11 +215,12 @@ def view_pokemons():
     user_choice = int(input("Go to(1-3): "))
 
     if user_choice == 1:
+        os.system("cls" if os.name == "nt" else "clear")
         search(pokemons)
     elif user_choice == 2:
         os.system("cls" if os.name == "nt" else "clear")
         menu()
-    else:
+    else: 
         return 0
 
 menu()
